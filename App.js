@@ -1,5 +1,8 @@
-import { StyleSheet, View, TextInput, Text, Button, FlatList, TouchableOpacity, Modal } from 'react-native';
-import { useState } from 'react'
+import { StyleSheet, View, TextInput, Text, Button, FlatList, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react'
+import CustomModal from './components/Modal'
+import AddItem from './components/AddItem'
+import List from './components/List'
 
 export default function App( ) {
     
@@ -10,10 +13,11 @@ export default function App( ) {
 
   const onHandlerChangeItem = (text) => setTextItem(text)
   const onHandlerAddItem = () => {
-    setItemList(currentItems => [...currentItems, { id: Date.now(), value: textItem}])
+    console.log('se agrego el item', textItem)
+    setItemList(currentItems => [...currentItems, { id: Date.now(), value: textItem, completed: false}])
     // setItemList({...itemList, id: Math.random()*10, value: textItem }) => hace lo mismo que la de arriba
     setTextItem('')
-  } 
+  }
 
   const onHandlerDeleteItem = id => {
     setItemList(currentItems => currentItems.filter(item => item.id !== id))
@@ -25,51 +29,42 @@ export default function App( ) {
     setModalVisible(!modalVisible)
   }
 
-
+  const onHandlerCompleteItem = id => {
+    let itemCompleted = itemList.findIndex((item) => item.id === id)
+    itemList[itemCompleted].completed = true
+    setItemList([...itemList])
+    setModalVisible(!modalVisible)
+  }
+  
+  // useEffect(() => {
+  //   // se ejectua todo el tiempo, NO SE USA ASI
+  // })
+    
+  // useEffect(() => {
+  //   // se ejecuta cuando se carga el componente
+  // }, [])
+  
+  // useEffect(() => {
+  //     // se ejecuta cuando se cambia el estado ITEMLIST
+  //     console.table(itemList)
+  //   }, [itemList])
+      
   return (
     <View style={styles.screen}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.modal}>
-          <View style={styles.modalView}>
-            <View style={styles.modalTitle}>
-              <Text>
-                Mi modal
-              </Text>
-            </View>
-            <View style={styles.modalMessage}>
-              <Text>Estas seguro que desea borrar ?</Text>
-            </View>
-            <View style={styles.modalMessage}>
-              <Text style={styles.modalItem}>{itemSelected.value}</Text>
-            </View>
-            <View style={styles.modalButton}>
-              <Button onPress={() => onHandlerDeleteItem(itemSelected.id)} title='Confirmar' />
-            </View>
-          </View>
-        </View>
-      </Modal>
-      <View style={styles.container}>
-        <TextInput 
-          placeholder='Escribe aqui' 
-          style={styles.input} 
-          value={textItem}
-          onChangeText={onHandlerChangeItem}  
-        />
-        <Button title='Add' style={styles.button} onPress={onHandlerAddItem} disabled={textItem.length < 1 ? true : false}/>
-      </View>
-      <FlatList 
-        data={itemList}
-        renderItem={data => (
-          <TouchableOpacity onPress={() => onHandlerModal(data.item.id)} style={styles.item}>
-              <Text>{data.item.value}</Text>
-          </TouchableOpacity>
-        )}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id}
+      <CustomModal 
+        modalVisible={modalVisible}
+        onHandlerDeleteItem={onHandlerDeleteItem}
+        itemSelected={itemSelected}
+        onHandlerCompleteItem={onHandlerCompleteItem}
+      /> 
+      <AddItem 
+        textItem={textItem}
+        onHandlerAddItem={onHandlerAddItem}
+        onHandlerChangeItem={onHandlerChangeItem}
+      />
+      <List 
+        itemList={itemList}
+        onHandlerModal={onHandlerModal}
       />
     </View>
   );
@@ -80,57 +75,4 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     padding: 30,
   },
-  container: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row'  
-  },
-  input: {
-    width: '80%',
-    height: 50,
-    borderColor: 'black',
-    borderWidth: 1,
-  },
-  item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 10,
-    marginTop: '10%',
-    height: 50,
-  },
-  modal: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)'
-  },  
-  modalView: {
-    backgroundColor: 'white',
-    width: '80%',
-    height: '50%',
-    borderRadius: 10,
-    padding: '10%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  modalTitle: {
-    backgroundColor: '#ccc',
-    color: 'white',
-    fontSize: 18,
-  },
-  modalMessage: {
-    marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modalButton: {
-    marginTop: 15,
-  },
-  modalItem: {
-    fontSize: 30
-  }
 })
