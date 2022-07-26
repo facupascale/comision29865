@@ -1,21 +1,27 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { FlatList} from 'react-native'
+import { BREADS } from '../data/breads'
+import BreadItem from '../components/BreadItem'
 
-export const CategoryBreadScreen = ({route}) => {
+export const CategoryBreadScreen = ({navigation, route}) => {
+    
+    const Breads = BREADS.filter(bread => bread.category === route.params.categoryID)
 
-    const { title } = route.params;
+    const handleSelected = (item) => {
+        navigation.navigate('Detail', {
+            bread: item
+        })
+    }
+
+    const renderItemBread = ({ item }) => (
+        <BreadItem item={item} onSelected={handleSelected} />
+    )
 
     return (
-        <View style={styles.screen}>
-            <Text>{title}</Text>
-        </View>
+        <FlatList
+            data={Breads}
+            renderItem={renderItemBread}
+            keyExtractor={item => item.id}
+        />
     )
 }
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
