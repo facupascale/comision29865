@@ -1,6 +1,5 @@
 import React from 'react'
 import { Image, Platform } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import {CategoriesScreen} from '../screens/CategoriesScreen'
@@ -19,7 +18,6 @@ const Logo = () => {
 
 const ShopNavigator = () => {
     return (
-        <NavigationContainer>
             <Stack.Navigator initialRouteName="Home" screenOptions={{
                 headerStyle: {
                     backgroundColor: Platform.OS === 'android' ? COLORS.primary : COLORS.accent
@@ -33,7 +31,6 @@ const ShopNavigator = () => {
                 <Stack.Screen name='Products' component={CategoryBreadScreen} options={({route}) => ({ title: route.params.name})}/>
                 <Stack.Screen name='Detail' component={BreadDetailScreen} options={({route}) => ({title: route.params.bread.name})} />
             </Stack.Navigator>
-        </NavigationContainer>
     )
 }
 export default ShopNavigator;

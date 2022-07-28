@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import ShopNavigator from './navigation/ShopNavigator';
+import MainNavigation from './navigation';
+
 export default function App() {
   
   const [loaded] = useFonts({
@@ -14,15 +14,7 @@ export default function App() {
   if(!loaded) return <AppLoading />
 
   return (
-    <ShopNavigator />
+    <MainNavigation />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
