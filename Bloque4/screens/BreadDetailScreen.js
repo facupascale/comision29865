@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
+import { useSelector } from 'react-redux'
 
-export const BreadDetailScreen = ({ route }) => {
+export const BreadDetailScreen = () => {
 
-    const { bread } = route.params
+    const bread = useSelector(store => store.breads.selected)
 
     return (
         <View style={styles.screen}>

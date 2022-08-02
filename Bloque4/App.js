@@ -3,6 +3,8 @@ import 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import MainNavigation from './navigation';
+import { Provider } from 'react-redux'
+import storeChanchito from './store'
 
 export default function App() {
   
@@ -14,7 +16,9 @@ export default function App() {
   if(!loaded) return <AppLoading />
 
   return (
-    <MainNavigation />
+    <Provider store={storeChanchito}>
+      <MainNavigation />
+    </Provider>
   );
 }
 
