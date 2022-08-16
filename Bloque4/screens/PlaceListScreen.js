@@ -1,18 +1,35 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { FlatList, Text } from 'react-native'
+import { useSelector } from 'react-redux'
+import PlaceItem from '../components/PlaceItems'
 
-const PlaceListScreen = () => {
+const PlaceListScreen = ({ navigation }) => {
+    const places = useSelector(state => state.places.places)
+
+    const renderItem = (data) => (
+        <PlaceItem
+            title={data?.item.title}
+            image={data?.item.image}
+            address='123, Fake Street, Fake City, Fake State, Fake Country'
+            onSelect={() => navigation.navigate('Detalle')}
+        />
+    )
+
     return (
-        <View style={styles.container}>
-            <Text>Direcciones</Text>
-        </View>
+        <>
+        { places && places.length > 0 ? (
+                <FlatList
+                    data={places}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => Date.now()}
+                />
+            ) : (
+                <Text>No hay lugares</Text>
+            ) 
+        }
+        </>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
-})
 
 export default PlaceListScreen

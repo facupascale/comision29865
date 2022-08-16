@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import { addPlace } from '../store/actions/place.actions';
 import ImageSelector from '../components/ImageSelector';
 
-const NewPlaceScreen = () => {
+const NewPlaceScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
-
+    const [image, setImage] = useState('');
     const handleTitleChange = text => setTitle(text)
 
     const handleSave = () => {
@@ -25,7 +25,7 @@ const NewPlaceScreen = () => {
                     value={title}
                     onChangeText={handleTitleChange}    
                 />
-                <ImageSelector onImage={image => console.log(image)} />
+                <ImageSelector onImage={image => setImage(image)} />
                 <Button title='Grabar Direccion' color={COLORS.MAROON} onPress={handleSave}/>
             </View>
         </ScrollView>

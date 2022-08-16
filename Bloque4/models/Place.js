@@ -1,3 +1,3 @@
-const Place = (id, title) => {}
+const Place = (id, title, image) => {}
 
 export default Place
