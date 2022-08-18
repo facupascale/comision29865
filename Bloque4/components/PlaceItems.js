@@ -3,6 +3,7 @@ import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
 import { COLORS } from '../constants/colors';
 
 const PlaceItem = ({ title, image, address, onSelect}) => {
+    console.log(address, 'soy address')
     return (
         <TouchableOpacity 
             onPress={onSelect}
@@ -39,12 +40,12 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     title: {
-        color: COLORS.BLUSH,
+        color: 'black',
         fontSize: 18,
         marginBottom: 6,
     },
     address: {
-        color: COLORS.BLACK,
+        color: 'red',
         fontSize: 16,
     }
 })

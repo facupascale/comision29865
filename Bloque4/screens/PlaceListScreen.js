@@ -10,14 +10,17 @@ const PlaceListScreen = ({ navigation }) => {
         <PlaceItem
             title={data?.item.title}
             image={data?.item.image}
-            address='123, Fake Street, Fake City, Fake State, Fake Country'
-            onSelect={() => navigation.navigate('Detalle')}
+            address={data?.item.address}
+            onSelect={() => navigation.navigate('Detalle', {
+                placeID: data.item.id
+            })}
         />
     )
+    console.log(places, 'soy places')
 
     return (
         <>
-        { places && places.length > 0 ? (
+        { places?.length > 0 ? (
                 <FlatList
                     data={places}
                     renderItem={renderItem}

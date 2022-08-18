@@ -4,21 +4,22 @@ import { COLORS } from '../constants/colors'
 import { useDispatch } from 'react-redux';
 import { addPlace } from '../store/actions/place.actions';
 import ImageSelector from '../components/ImageSelector';
+import LocationSelector from '../components/LocationSelector';
 
-const NewPlaceScreen = ({ navigation }) => {
+const NewPlaceScreen = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [image, setImage] = useState('');
+    const [location, setLocation] = useState(null);
     const handleTitleChange = text => setTitle(text)
 
     const handleSave = () => {
-        dispatch(addPlace(title, image));
+        dispatch(addPlace(title, image, location));
         navigation.navigate('Direcciones');
     }
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
+        <ScrollView style={{ flex: 1}} scrollEnabled>
                 <Text style={styles.label}>Titulo</Text>
                 <TextInput 
                     style={styles.input}
@@ -26,15 +27,14 @@ const NewPlaceScreen = ({ navigation }) => {
                     onChangeText={handleTitleChange}    
                 />
                 <ImageSelector onImage={image => setImage(image)} />
+                <LocationSelector onLocation={setLocation} mapLocation={route?.params?.mapLocation} />
                 <Button title='Grabar Direccion' color={COLORS.MAROON} onPress={handleSave}/>
-            </View>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         margin: 30,
     },
     label: {

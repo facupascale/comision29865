@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontFamily: 'OpenSansBold',
         marginBottom: 18,
-        textAling: 'center'
+        textAlign: 'center'
     },
     container: {
         width: '80%',
