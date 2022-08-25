@@ -5,7 +5,7 @@ const initialState = {
 }
 
 const OrderReducer = (state = initialState, action) => {
-    console.log(state, 'soy state')
+
     switch(action.type) {
         case GET_ORDERS:
             return {

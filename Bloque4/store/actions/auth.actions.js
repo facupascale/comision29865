@@ -53,7 +53,7 @@ export const login = (email, password) => {
 
         if(!response.ok) {
             const errorResponse = await response.json();
-            console.log(errorResponse)
+
             const errorID = errorResponse.error.message;
 
             let message = 'No se ha podido iniciar sesión';

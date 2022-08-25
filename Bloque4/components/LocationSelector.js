@@ -12,11 +12,12 @@ const LocationSelector = ({onLocation, mapLocation}) => {
     const handleGetLocation = async () => {
         const isLocationOk = await verifyPermissions();
         if (!isLocationOk) {
+
             return
         }
 
         const location = await Location.getCurrentPositionAsync({
-            timeout: 5000,
+            timeout: 2000,
         });
 
         setPickedLocation({

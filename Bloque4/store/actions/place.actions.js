@@ -1,7 +1,9 @@
 import * as FileSystem from 'expo-file-system';
 import { API_MAPS_KEY } from '../../constants/DataBase';
+import { fetchAddress, insertAddress } from '../../db';
 
 export const ADD_PLACE = 'ADD_PLACE'
+export const LOAD_PLACES = 'LOAD_PLACES'
 
 export const addPlace = (title, image, location) => {
     return async dispatch => {
@@ -14,7 +16,6 @@ export const addPlace = (title, image, location) => {
         if(!resData.results) throw new Error('No se ha podido obtener la dirección')
 
         const address = resData.results[0].formatted_address;
-        console.log(address)
 
         const fileName = image.split('/').pop()
         const Path = FileSystem.documentDirectory + fileName
@@ -24,16 +25,39 @@ export const addPlace = (title, image, location) => {
                 from: image,
                 to: Path
             })
+
+            const result = await insertAddress(
+                title,
+                Path,
+                address,
+                location.lat,
+                location.lng
+            )
+            
+            dispatch({ type: ADD_PLACE, payload: { 
+                id: result.insertId,
+                title, 
+                image: Path, 
+                address,
+                lat: location.lat,
+                lng: location.lng
+            }})
         } catch (error) {
             console.log(error.message)
             throw error
         }
-        dispatch({ type: ADD_PLACE, payload: { 
-            title, 
-            image: Path, 
-            address,
-            lat: location.lat,
-            lng: location.lng
-        }})
+    }
+}
+
+export const loadAddress = () => {
+    return async dispatch => {
+        try {
+            const result = await fetchAddress()
+            console.log(result)
+            dispatch({ type: LOAD_PLACES, places: result.rows._array})
+        } catch (error) {
+            console.log(error.message)
+            throw error
+        }
     }
 }

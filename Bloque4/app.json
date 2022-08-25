@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "clase7",
-    "slug": "clase7",
+    "name": "app-mapa",
+    "slug": "app-mapa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "platforms": ["ios", "android"],
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,12 +19,26 @@
       "**/*"
     ],
     "ios": {
+      "bundlerIdentifier": "com.coderhouse.places",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.coderhouse.places",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "config": {
+      "googleMaps": {
+        "apiKey": "AIzaSyDUKsRM2XVCCMDMAOkEuP5VX5Cm2aY99Ps"
       }
     },
     "web": {

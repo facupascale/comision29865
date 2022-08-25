@@ -9,7 +9,7 @@ const OrderItemScreen = () => {
 
     const dispatch = useDispatch();
     const orders = useSelector(state => state.order.list)
-    console.log(orders, 'soy orders')
+
     useEffect(() => {
         dispatch(getOrders());
     }, []);

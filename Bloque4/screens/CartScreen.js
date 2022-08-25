@@ -7,7 +7,7 @@ import { removeItem, confirmCart } from '../store/actions/cart.actions'
 const CartScreen = () => {
   const dispatch = useDispatch()
   const { items, total } = useSelector(store => store.cart)
-  console.log(items, 'soy items')
+
   const handleConfirmCart = () => {
     dispatch(confirmCart(items, total));
   } 
